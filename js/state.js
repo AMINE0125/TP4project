@@ -1,20 +1,9 @@
-// -------------------------------------------------
-// État de l'application
-// -------------------------------------------------
-
 export const state = {
+    customers: [],
+    products: [],
+    orders: [],
 
-    // Toutes les commandes
-    items: [],
-
-    // Texte recherché
     search: "",
-
-    // Statut sélectionné
-    // all / Livrée / En attente / Annulée
     status: "all",
-
-    // Afficher uniquement les commandes payées
-    paidOnly: false
-
+    category: "all"
 };
