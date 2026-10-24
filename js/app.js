@@ -1,179 +1,53 @@
-// -------------------------------------------------
-// Imports
-// -------------------------------------------------
-
 import { state } from "./state.js";
 
-import {
-    fetchData
-} from "./dataService.js";
+import { fetchData } from "./dataService.js";
 
 import {
-    renderItems,
+    getFilteredOrders,
+    getOrderDetails,
+    getStatistics,
+    getCategories
+} from "./selectors.js";
+
+import {
+    renderOrders,
     renderStats,
-    renderDetail
+    renderCategories,
+    renderDetail,
+    showError
 } from "./view.js";
 
-
-// -------------------------------------------------
-// Éléments HTML
-// -------------------------------------------------
 
 const searchInput =
     document.querySelector("#searchInput");
 
-const btnAll =
-    document.querySelector("#btnAll");
-
 const statusButtons =
     document.querySelectorAll(".status-btn");
 
-const paidOnly =
-    document.querySelector("#paidOnly");
+const categorySelect =
+    document.querySelector("#categorySelect");
 
 const ordersTable =
     document.querySelector("#ordersTable");
 
-const errorMessage =
-    document.querySelector("#errorMessage");
-
-
-// -------------------------------------------------
-// Bouton actif
-// -------------------------------------------------
-
-const updateActiveButton = () => {
-
-    btnAll.classList.toggle(
-        "active",
-        state.status === "all"
-    );
-
-
-    statusButtons.forEach(button => {
-
-        button.classList.toggle(
-            "active",
-            button.dataset.status === state.status
-        );
-
-    });
-};
-
-
-// -------------------------------------------------
-// Filtrage des commandes
-// filter()
-// -------------------------------------------------
-
-const getVisibleItems = () => {
-
-    return state.items.filter(item => {
-
-
-        // =========================================
-        // RECHERCHE CLIENT / PRODUIT
-        // =========================================
-
-        const text =
-            state.search
-                .toLowerCase();
-
-
-        const matchesSearch =
-
-            item.client
-                .toLowerCase()
-                .includes(text)
-
-            ||
-
-            item.product
-                .toLowerCase()
-                .includes(text)
-
-            ||
-
-            item.brand
-                .toLowerCase()
-                .includes(text);
-
-
-        // =========================================
-        // FILTRE STATUT
-        // =========================================
-
-        const matchesStatus =
-
-            state.status === "all"
-
-            ||
-
-            item.status === state.status;
-
-
-        // =========================================
-        // FILTRE PAIEMENT
-        // =========================================
-
-        const matchesPaid =
-
-            !state.paidOnly
-
-            ||
-
-            item.paid;
-
-
-        // =========================================
-        // RESULTAT FINAL
-        // =========================================
-
-        return (
-
-            matchesSearch
-
-            &&
-
-            matchesStatus
-
-            &&
-
-            matchesPaid
-
-        );
-
-    });
-};
-
-
-// -------------------------------------------------
-// Rendu principal
-// -------------------------------------------------
 
 const render = () => {
 
-    const visibleItems =
-        getVisibleItems();
+    const filteredOrders =
+        getFilteredOrders();
 
+    const ordersDetails =
+        filteredOrders.map(order =>
+            getOrderDetails(order)
+        );
 
-    renderItems(
-        visibleItems
-    );
-
+    renderOrders(ordersDetails);
 
     renderStats(
-        state.items
+        getStatistics()
     );
-
-
-    updateActiveButton();
 };
 
-
-// -------------------------------------------------
-// Recherche
-// -------------------------------------------------
 
 searchInput.addEventListener(
     "input",
@@ -182,77 +56,47 @@ searchInput.addEventListener(
         state.search =
             event.target.value.trim();
 
-
         render();
-
     }
 );
 
 
-// -------------------------------------------------
-// Toutes
-// -------------------------------------------------
+statusButtons.forEach(button => {
 
-btnAll.addEventListener(
-    "click",
-    () => {
+    button.addEventListener(
+        "click",
+        () => {
 
-        state.status =
-            "all";
+            state.status =
+                button.dataset.status;
 
+            statusButtons.forEach(
+                currentButton => {
+                    currentButton.classList.remove(
+                        "active"
+                    );
+                }
+            );
 
-        render();
+            button.classList.add("active");
 
-    }
-);
-
-
-// -------------------------------------------------
-// Livrée / En attente / Annulée
-// -------------------------------------------------
-
-statusButtons.forEach(
-    button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                state.status =
-                    button.dataset.status;
+            render();
+        }
+    );
+});
 
 
-                render();
-
-            }
-        );
-
-    }
-);
-
-
-// -------------------------------------------------
-// Payées uniquement
-// -------------------------------------------------
-
-paidOnly.addEventListener(
+categorySelect.addEventListener(
     "change",
     event => {
 
-        state.paidOnly =
-            event.target.checked;
-
+        state.category =
+            event.target.value;
 
         render();
-
     }
 );
 
-
-// -------------------------------------------------
-// Bouton Voir détail
-// find()
-// -------------------------------------------------
 
 ordersTable.addEventListener(
     "click",
@@ -263,68 +107,66 @@ ordersTable.addEventListener(
                 ".details-btn"
             );
 
-
         if (!button) {
             return;
         }
 
+        const orderId =
+            Number(button.dataset.id);
 
-        const id =
-            Number(
-                button.dataset.id
+        const order =
+            state.orders.find(
+                order => order.id === orderId
             );
 
-
-        const item =
-            state.items.find(
-                item => item.id === id
-            );
-
-
-        if (!item) {
+        if (!order) {
             return;
         }
 
+        const details =
+            getOrderDetails(order);
 
-        renderDetail(item);
-
+        renderDetail(details);
     }
 );
 
-
-// -------------------------------------------------
-// Initialisation
-// -------------------------------------------------
 
 const init = async () => {
 
     try {
 
-        const items =
+        const data =
             await fetchData();
 
+        state.customers =
+            data.customers;
 
-        state.items =
-            items;
+        state.products =
+            data.products;
 
+        state.orders =
+            data.orders;
+
+
+        // Vérification des données chargées
+        console.log("Customers :", state.customers);
+        console.log("Products :", state.products);
+        console.log("Orders :", state.orders);
+
+
+        renderCategories(
+            getCategories()
+        );
 
         render();
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(error);
 
-
-        errorMessage.textContent =
-            "Impossible de charger les commandes. Vérifiez data/data.json et utilisez Live Server.";
-
-
-        errorMessage.classList.remove(
-            "d-none"
+        showError(
+            "Impossible de charger les données. Vérifiez les fichiers JSON et utilisez Live Server."
         );
-
     }
 };
 

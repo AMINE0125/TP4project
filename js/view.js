@@ -1,232 +1,134 @@
-// -------------------------------------------------
-// Éléments HTML
-// -------------------------------------------------
-
 const ordersTable =
     document.querySelector("#ordersTable");
 
 const resultCount =
     document.querySelector("#resultCount");
 
+const totalCustomers =
+    document.querySelector("#totalCustomers");
 
-// Statistiques
-const totalItems =
-    document.querySelector("#totalItems");
+const totalProducts =
+    document.querySelector("#totalProducts");
 
-const paidItems =
-    document.querySelector("#paidItems");
+const totalOrders =
+    document.querySelector("#totalOrders");
 
-const averagePrice =
-    document.querySelector("#averagePrice");
+const totalAmount =
+    document.querySelector("#totalAmount");
 
-const maxPrice =
-    document.querySelector("#maxPrice");
+const categorySelect =
+    document.querySelector("#categorySelect");
 
+const errorMessage =
+    document.querySelector("#errorMessage");
 
-// Modal
 const modalElement =
     document.querySelector("#orderModal");
 
 const modalTitle =
     document.querySelector("#modalTitle");
 
-const modalImage =
-    document.querySelector("#modalImage");
-
 const modalClient =
     document.querySelector("#modalClient");
 
-const modalProduct =
-    document.querySelector("#modalProduct");
-
-const modalBrand =
-    document.querySelector("#modalBrand");
-
-const modalCategory =
-    document.querySelector("#modalCategory");
-
-const modalPrice =
-    document.querySelector("#modalPrice");
-
-const modalStock =
-    document.querySelector("#modalStock");
-
-const modalStatus =
-    document.querySelector("#modalStatus");
-
-const modalPaid =
-    document.querySelector("#modalPaid");
+const modalCity =
+    document.querySelector("#modalCity");
 
 const modalDate =
     document.querySelector("#modalDate");
 
-const modalDescription =
-    document.querySelector("#modalDescription");
+const modalStatus =
+    document.querySelector("#modalStatus");
 
+const modalProducts =
+    document.querySelector("#modalProducts");
 
-// Instance Bootstrap
+const modalTotal =
+    document.querySelector("#modalTotal");
+
 const orderModal =
     new bootstrap.Modal(modalElement);
 
 
-// -------------------------------------------------
-// Création d'une ligne de commande
-// -------------------------------------------------
+const getStatusClass = (status) => {
 
-const createOrderRow = (item) => {
+    if (status === "Livree") {
+        return "status-delivered";
+    }
 
-    const paymentText =
-        item.paid
-            ? "Payée"
-            : "Non payée";
+    if (status === "En attente") {
+        return "status-pending";
+    }
 
-
-    const paymentClass =
-        item.paid
-            ? "paid"
-            : "not-paid";
+    return "status-cancelled";
+};
 
 
-    const statusClass =
-        item.status === "Livrée"
-            ? "status-delivered"
+const createOrderRow = (details) => {
 
-            : item.status === "En attente"
-                ? "status-pending"
+    const { order, customer, items, total } =
+        details;
 
-                : "status-cancelled";
-
+    const productsText =
+        items
+            .map(item =>
+                `${item.product.name} x ${item.quantity}`
+            )
+            .join(", ");
 
     return `
-
         <tr>
+            <td>${order.id}</td>
 
             <td>
-                ${item.id}
+                <strong>${customer.name}</strong>
+                <small class="d-block text-muted">
+                    ${customer.city}
+                </small>
             </td>
 
+            <td>${productsText}</td>
 
             <td>
-                <strong>
-                    ${item.client}
-                </strong>
-            </td>
-
-
-            <td>
-
-                <div class="product-cell">
-
-                    <img
-                        src="${item.image}"
-                        alt="${item.product}"
-                        class="table-product-image"
-                    >
-
-                    <div>
-
-                        <strong>
-                            ${item.product}
-                        </strong>
-
-                        <small>
-                            ${item.category}
-                        </small>
-
-                    </div>
-
-                </div>
-
-            </td>
-
-
-            <td>
-                ${item.brand}
-            </td>
-
-
-            <td>
-                ${item.price} DH
-            </td>
-
-
-            <td>
-
-                <span class="status-badge ${statusClass}">
-                    ${item.status}
+                <span class="status-badge ${getStatusClass(order.status)}">
+                    ${order.status}
                 </span>
-
             </td>
 
+            <td>${total} DH</td>
+
+            <td>${order.date}</td>
 
             <td>
-
-                <span class="payment-badge ${paymentClass}">
-                    ${paymentText}
-                </span>
-
-            </td>
-
-
-            <td>
-                ${item.date}
-            </td>
-
-
-            <td>
-
                 <button
                     class="btn btn-sm btn-primary details-btn"
-                    data-id="${item.id}"
+                    data-id="${order.id}"
                 >
                     Voir détail
                 </button>
-
             </td>
-
         </tr>
-
     `;
 };
 
 
-// -------------------------------------------------
-// Affichage des commandes
-// map()
-// -------------------------------------------------
-
-export const renderItems = (items) => {
+export const renderOrders = (ordersDetails) => {
 
     resultCount.textContent =
-        `${items.length} commande(s) affichée(s)`;
+        `${ordersDetails.length} commande(s) affichée(s)`;
 
 
-    if (items.length === 0) {
+    if (ordersDetails.length === 0) {
 
         ordersTable.innerHTML = `
-
             <tr>
-
-                <td
-                    colspan="9"
-                    class="text-center py-5"
-                >
-
+                <td colspan="7"
+                    class="text-center py-5">
                     <div class="empty-state">
-
                         Aucune commande trouvée.
-
-                        <br>
-
-                        Essayez un autre client
-                        ou changez les filtres.
-
                     </div>
-
                 </td>
-
             </tr>
-
         `;
 
         return;
@@ -234,141 +136,100 @@ export const renderItems = (items) => {
 
 
     ordersTable.innerHTML =
-        items
+        ordersDetails
             .map(createOrderRow)
             .join("");
 };
 
 
-// -------------------------------------------------
-// Statistiques
-// filter()
-// forEach()
-// map()
-// -------------------------------------------------
+export const renderStats = (stats) => {
 
-export const renderStats = (items) => {
+    totalCustomers.textContent =
+        stats.totalCustomers;
 
-    // Nombre total
-    totalItems.textContent =
-        items.length;
+    totalProducts.textContent =
+        stats.totalProducts;
 
+    totalOrders.textContent =
+        stats.totalOrders;
 
-    // Commandes payées
-    const paid =
-        items.filter(
-            item => item.paid
-        );
-
-    paidItems.textContent =
-        paid.length;
-
-
-    // Prix moyen
-    let sum = 0;
-
-
-    items.forEach(item => {
-
-        sum += item.price;
-
-    });
-
-
-    const average =
-        items.length > 0
-            ? Math.round(
-                sum / items.length
-            )
-            : 0;
-
-
-    averagePrice.textContent =
-        `${average} DH`;
-
-
-    // Prix maximum
-    const prices =
-        items.map(
-            item => item.price
-        );
-
-
-    const maximum =
-        prices.length > 0
-            ? Math.max(...prices)
-            : 0;
-
-
-    maxPrice.textContent =
-        `${maximum} DH`;
+    totalAmount.textContent =
+        `${stats.totalAmount} DH`;
 };
 
 
-// -------------------------------------------------
-// Affichage du détail
-// -------------------------------------------------
+export const renderCategories = (categories) => {
 
-export const renderDetail = (item) => {
+    categorySelect.innerHTML = `
+        <option value="all">
+            Toutes les catégories
+        </option>
+    `;
 
-    // Titre
+    categories.forEach(category => {
+
+        categorySelect.innerHTML += `
+            <option value="${category}">
+                ${category}
+            </option>
+        `;
+    });
+};
+
+
+export const renderDetail = (details) => {
+
+    const {
+        order,
+        customer,
+        items,
+        total
+    } = details;
+
+
     modalTitle.textContent =
-        item.product;
+        `Commande #${order.id}`;
 
-
-    // Photo
-    modalImage.src =
-        item.image;
-
-    modalImage.alt =
-        item.product;
-
-
-    // Informations
     modalClient.textContent =
-        item.client;
+        customer.name;
 
-
-    modalProduct.textContent =
-        item.product;
-
-
-    modalBrand.textContent =
-        item.brand;
-
-
-    modalCategory.textContent =
-        item.category;
-
-
-    modalPrice.textContent =
-        `${item.price} DH`;
-
-
-    modalStock.textContent =
-        item.stock > 0
-            ? `${item.stock} disponible(s)`
-            : "Rupture de stock";
-
-
-    modalStatus.textContent =
-        item.status;
-
-
-    modalPaid.textContent =
-        item.paid
-            ? "Payée"
-            : "Non payée";
-
+    modalCity.textContent =
+        customer.city;
 
     modalDate.textContent =
-        item.date;
+        order.date;
+
+    modalStatus.textContent =
+        order.status;
 
 
-    modalDescription.textContent =
-        item.description;
+    modalProducts.innerHTML =
+        items
+            .map(item => `
+                <div class="info-row">
+                    <span>
+                        ${item.product.name}
+                        x ${item.quantity}
+                    </span>
+
+                    <strong>
+                        ${item.lineTotal} DH
+                    </strong>
+                </div>
+            `)
+            .join("");
 
 
-    // Ouvrir la fenêtre
+    modalTotal.textContent =
+        `${total} DH`;
+
     orderModal.show();
+};
+
+
+export const showError = (message) => {
+
+    errorMessage.textContent = message;
+
+    errorMessage.classList.remove("d-none");
 };
