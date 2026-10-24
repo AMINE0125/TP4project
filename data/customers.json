@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Amine",
+        "city": "Agadir",
+        "active": true
+    },
+    {
+        "id": 2,
+        "name": "Oussama",
+        "city": "Marrakech",
+        "active": true
+    },
+    {
+        "id": 3,
+        "name": "Yassine",
+        "city": "Casablanca",
+        "active": true
+    },
+    {
+        "id": 4,
+        "name": "Samir",
+        "city": "Rabat",
+        "active": true
+    },
+    {
+        "id": 5,
+        "name": "Omar",
+        "city": "Salé",
+        "active": true
+    },
+    {
+        "id": 6,
+        "name": "Salma",
+        "city": "Fès",
+        "active": false
+    }
+]

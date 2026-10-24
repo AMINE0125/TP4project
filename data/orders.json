@@ -1,100 +1,138 @@
 [
     {
-        "id": 1,
-        "client": "Amine",
-        "product": "Logitech K380",
-        "brand": "Logitech",
-        "category": "Clavier",
-        "price": 349,
-        "stock": 24,
-        "status": "Livrée",
-        "paid": true,
+        "id": 101,
+        "customerId": 1,
+        "status": "Livree",
         "date": "2026-10-10",
-        "image": "images/Logitech K380.jpg",
-        "description": "Clavier compact et silencieux, idéal pour coder en déplacement."
+        "items": [
+            {
+                "productId": 10,
+                "quantity": 1
+            },
+            {
+                "productId": 11,
+                "quantity": 1
+            }
+        ]
     },
     {
-        "id": 2,
-        "client": "Oussama",
-        "product": "Logitech MX Keys S",
-        "brand": "Logitech",
-        "category": "Clavier",
-        "price": 1190,
-        "stock": 8,
+        "id": 102,
+        "customerId": 2,
         "status": "En attente",
-        "paid": false,
         "date": "2026-10-11",
-        "image": "images/Logitech MX Keys S.jpg",
-        "description": "Clavier rétroéclairé avec touches confortables pour de longues sessions de développement."
+        "items": [
+            {
+                "productId": 11,
+                "quantity": 1
+            }
+        ]
     },
     {
-        "id": 3,
-        "client": "Yassine",
-        "product": "Keychron K2",
-        "brand": "Keychron",
-        "category": "Clavier",
-        "price": 890,
-        "stock": 0,
-        "status": "Annulée",
-        "paid": false,
+        "id": 103,
+        "customerId": 3,
+        "status": "Annulee",
         "date": "2026-10-12",
-        "image": "images/Keychron K2.jpg",
-        "description": "Clavier mécanique 75 % compatible Windows et Mac, apprécié par les développeurs et les gamers."
+        "items": [
+            {
+                "productId": 12,
+                "quantity": 1
+            }
+        ]
     },
     {
-        "id": 4,
-        "client": "Samir",
-        "product": "Logitech MX Master 3S",
-        "brand": "Logitech",
-        "category": "Souris",
-        "price": 1050,
-        "stock": 10,
+        "id": 104,
+        "customerId": 4,
         "status": "En attente",
-        "paid": true,
         "date": "2026-10-13",
-        "image": "images/Logitech MX Master 3S.jpg",
-        "description": "Souris ergonomique haut de gamme avec molette ultra rapide et clics silencieux."
+        "items": [
+            {
+                "productId": 13,
+                "quantity": 1
+            },
+            {
+                "productId": 14,
+                "quantity": 1
+            }
+        ]
     },
     {
-        "id": 5,
-        "client": "Omar",
-        "product": "Logitech M720 Triathlon",
-        "brand": "Logitech",
-        "category": "Souris",
-        "price": 449,
-        "stock": 17,
-        "status": "Livrée",
-        "paid": true,
+        "id": 105,
+        "customerId": 5,
+        "status": "Livree",
         "date": "2026-10-14",
-        "image": "images/Logitech M720 Triathlon.jpg",
-        "description": "Souris multi-appareils permettant de passer d'un ordinateur à un autre."
+        "items": [
+            {
+                "productId": 14,
+                "quantity": 2
+            }
+        ]
     },
     {
-        "id": 6,
-        "client": "Salma",
-        "product": "Logitech Pebble M350",
-        "brand": "Logitech",
-        "category": "Souris",
-        "price": 229,
-        "stock": 0,
-        "status": "Annulée",
-        "paid": false,
+        "id": 106,
+        "customerId": 6,
+        "status": "Annulee",
         "date": "2026-10-15",
-        "image": "images/Logitech Pebble M350.jpg",
-        "description": "Souris plate, fine et silencieuse, idéale pour les déplacements."
+        "items": [
+            {
+                "productId": 15,
+                "quantity": 1
+            }
+        ]
     },
     {
-        "id": 7,
-        "client": "Amine",
-        "product": "Microsoft Designer Compact",
-        "brand": "Microsoft",
-        "category": "Clavier",
-        "price": 520,
-        "stock": 12,
-        "status": "Livrée",
-        "paid": true,
+        "id": 107,
+        "customerId": 1,
+        "status": "Livree",
         "date": "2026-10-16",
-        "image": "images/Microsoft Designer Compact.jpg",
-        "description": "Clavier fin et léger, facile à transporter, avec une frappe douce et fluide."
+        "items": [
+            {
+                "productId": 16,
+                "quantity": 1
+            }
+        ]
+    },
+    {
+        "id": 108,
+        "customerId": 2,
+        "status": "Livree",
+        "date": "2026-10-17",
+        "items": [
+            {
+                "productId": 17,
+                "quantity": 1
+            },
+            {
+                "productId": 14,
+                "quantity": 1
+            }
+        ]
+    },
+    {
+        "id": 109,
+        "customerId": 3,
+        "status": "En attente",
+        "date": "2026-10-18",
+        "items": [
+            {
+                "productId": 10,
+                "quantity": 2
+            }
+        ]
+    },
+    {
+        "id": 110,
+        "customerId": 4,
+        "status": "Livree",
+        "date": "2026-10-19",
+        "items": [
+            {
+                "productId": 13,
+                "quantity": 1
+            },
+            {
+                "productId": 17,
+                "quantity": 2
+            }
+        ]
     }
 ]

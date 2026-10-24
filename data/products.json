@@ -1,0 +1,82 @@
+[
+    {
+        "id": 10,
+        "name": "Logitech K380",
+        "category": "Clavier",
+        "brand": "Logitech",
+        "price": 349,
+        "stock": 24,
+        "image": "images/Logitech K380.jpg",
+        "description": "Clavier compact et silencieux, idéal pour coder en déplacement."
+    },
+    {
+        "id": 11,
+        "name": "Logitech MX Keys S",
+        "category": "Clavier",
+        "brand": "Logitech",
+        "price": 1190,
+        "stock": 8,
+        "image": "images/Logitech MX Keys S.jpg",
+        "description": "Clavier rétroéclairé avec touches confortables pour les longues sessions de développement."
+    },
+    {
+        "id": 12,
+        "name": "Keychron K2",
+        "category": "Clavier",
+        "brand": "Keychron",
+        "price": 890,
+        "stock": 0,
+        "image": "images/Keychron K2.jpg",
+        "description": "Clavier mécanique 75 % compatible Windows et Mac."
+    },
+    {
+        "id": 13,
+        "name": "Logitech MX Master 3S",
+        "category": "Souris",
+        "brand": "Logitech",
+        "price": 1050,
+        "stock": 10,
+        "image": "images/Logitech MX Master 3S.jpg",
+        "description": "Souris ergonomique haut de gamme avec molette ultra rapide."
+    },
+    {
+        "id": 14,
+        "name": "Logitech M720 Triathlon",
+        "category": "Souris",
+        "brand": "Logitech",
+        "price": 449,
+        "stock": 17,
+        "image": "images/Logitech M720 Triathlon.jpg",
+        "description": "Souris multi-appareils permettant de passer facilement d'un ordinateur à un autre."
+    },
+    {
+        "id": 15,
+        "name": "Logitech Pebble M350",
+        "category": "Souris",
+        "brand": "Logitech",
+        "price": 229,
+        "stock": 0,
+        "image": "images/Logitech Pebble M350.jpg",
+        "description": "Souris plate, fine et silencieuse, idéale pour les déplacements."
+    },
+    {
+        "id": 16,
+        "name": "Microsoft Designer Compact",
+        "category": "Clavier",
+        "brand": "Microsoft",
+        "price": 520,
+        "stock": 12,
+        "image": "images/Microsoft Designer Compact.jpg",
+        "description": "Clavier fin et léger avec une frappe douce et fluide."
+    },
+    {
+        "id": 17,
+        "name": "Logitech G203 Lightsync",
+        "category": "Gaming",
+        "brand": "Logitech",
+        "price": 299,
+        "stock": 15,
+        "image": "images/Logitech G203 Lightsync.jpg",
+        "description": "Souris gaming légère avec éclairage RGB personnalisable."
+    }
+]
